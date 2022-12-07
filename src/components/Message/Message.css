@@ -32,3 +32,27 @@
    background-color: white !important;
 
 }
+.messsages{
+    width: 250px;
+    height: 46px;
+    border: 2px solid black;
+    position: relative;
+    border-radius: 15px !important;
+
+
+}
+.messsages::after{
+    content: "" !important;
+    position: absolute !important;
+    width: 15px !important;
+    height: 15px !important;
+    border: 2px solid black !important;
+    border-left: 0px !important;
+    border-top: 0px !important;
+    top: 100% !important;
+    left: 50% !important;
+    margin-left: -13px !important;
+    transform: rotate(45deg) !important;
+    margin-top: -7px !important;
+    background: #ececec !important;
+}

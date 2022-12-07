@@ -10,10 +10,11 @@ function Message() {
 
             </div>
             <div className='messages-data'>
-
+            <div className='messsages'></div>
+            <div className='messsages-border'></div>
             </div>
             <div className='type-messages'>
-
+            
 </div>
         </Container>
     </div>

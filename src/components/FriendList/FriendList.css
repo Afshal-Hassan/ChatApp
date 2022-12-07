@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Montserrat&display=swap');
+
+.friend-list-container{
+    
+    width: 300px !important;
+    height: 100vh;
+    background-color: #0d2234;
+    padding-top:24px !important ;
+}
+.friend-name{
+    color: whitesmoke !important;
+    font-family: 'Montserrat', sans-serif!important;
+    font-weight: 600 !important;
+    margin-left: 12.5px !important;
+
+}
+.friend-list-data{
+   
+    width: 100% !important;
+    height: 50px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    
+    
+}
+.friend-list{
+    
+    width: 100% !important;
+    height: 95% !important;
+    box-sizing: border-box !important;
+    padding-top: 60px !important;
+    
+}
+.chat-logo{
+    margin-right: 10px;
+}
+.friend-list-header{
+ 
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.friend-list-heading{
+     font-family: 'Fira Sans', sans-serif !important;
+     color: whitesmoke !important;
+     font-weight: bolder !important;
+     font-size: 21px !important;
+     text-align: center !important;
+}
+.friend-image{
+    width: 50px !important;
+    height: 50px !important;
+    /* border: 2px solid green !important; */
+    border-radius: 50% !important;
+    box-sizing: border-box !important;
+    outline: 1.99px solid green !important;
+    
+    
+}

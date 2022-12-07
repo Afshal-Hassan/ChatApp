@@ -16,7 +16,10 @@ function FriendList() {
           <div className='friend-list-data'>
             <img className='friend-image' alt='FriendImage' src={Chat}/>
             <Typography className='friend-name'>Michael</Typography>
+            <div className='message-div-curve'></div>
+            <div className='message-div-curve-right'></div>
           </div>
+          
         </div>
       </Container>
 

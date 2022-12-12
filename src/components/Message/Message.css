@@ -23,9 +23,9 @@
     box-sizing: border-box !important;
 }
 .type-messages{
-    border: 2px solid green !important;
-    width: 98% !important;
-    height: 8% !important;
+    border: 1px solid white !important;
+    width: 80% !important;
+    height:100% !important;
     box-sizing: border-box !important;
     margin-left: 6.99px !important;
    border-radius: 24px !important;
@@ -35,7 +35,7 @@
 .messsages{
     width: 250px;
     height: 46px;
-    border: 2px solid black;
+    background-color:  white;
     position: relative;
     border-radius: 15px !important;
 
@@ -46,7 +46,7 @@
     position: absolute !important;
     width: 15px !important;
     height: 15px !important;
-    border: 2px solid black !important;
+  
     border-left: 0px !important;
     border-top: 0px !important;
     top: 100% !important;
@@ -54,5 +54,17 @@
     margin-left: -13px !important;
     transform: rotate(45deg) !important;
     margin-top: -7px !important;
-    background: #ececec !important;
+    background: white !important;
+}
+.message-send{
+    border: 2px solid black !important;
+    width: 100% !important;
+    height: 8% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: row !important;
+   
+}
+.send-btn{
+    margin-left: 20px !important;
 }

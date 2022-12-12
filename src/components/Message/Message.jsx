@@ -10,7 +10,7 @@ function Message() {
       <Container className='message-component-container'>
         <div className='friend-data-container'>
             <img src={Chat} className="friend-pic"/>
-            <span className='friend-message-name'>Arham</span>
+            <div className='friend-message-name'>Arham</div>
         </div>
         <div className='messages-data'>
           <div className='messsages'></div>

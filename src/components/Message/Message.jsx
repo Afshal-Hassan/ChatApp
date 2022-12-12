@@ -1,14 +1,16 @@
 import { Button, Container } from '@mui/material';
 import React from 'react';
 import SendIcon from '@mui/icons-material/Send';
-import "./Message.css"
+import "./Message.css";
+import Chat from "./Chat.png"
 
 function Message() {
   return (
     <div className='message-component-module'>
       <Container className='message-component-container'>
         <div className='friend-data-container'>
-
+            <img src={Chat} className="friend-pic"/>
+            <span className='friend-message-name'>Arham</span>
         </div>
         <div className='messages-data'>
           <div className='messsages'></div>

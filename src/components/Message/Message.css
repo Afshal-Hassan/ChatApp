@@ -14,6 +14,11 @@
     width: 100% !important;
     box-sizing: border-box !important;
     background-color: #0d2234;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: start  !important;
+    padding-left: 25px !important;
     
 }
 .messages-data{
@@ -67,4 +72,13 @@
 }
 .send-btn{
     margin-left: 20px !important;
+}
+.friend-pic{
+    width: 37px !important;
+    height: 37px !important;
+    border: 2px solid green !important;
+    border-radius: 50% !important;
+}
+.friend-message-name{
+    
 }

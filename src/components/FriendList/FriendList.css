@@ -26,6 +26,7 @@
     align-items: center !important;
     padding-left: 10px !important;
     position: relative !important;
+    margin-bottom: 20px !important;
     
     
     
@@ -110,7 +111,7 @@
     /* border: 2px solid green !important; */
     border-radius: 50% !important;
     box-sizing: border-box !important;
-    outline: 1.99px solid green !important;
+    outline: 2px solid green !important;
     
     
 }

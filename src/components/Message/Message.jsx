@@ -1,10 +1,35 @@
 import { Button, Container } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SendIcon from '@mui/icons-material/Send';
+import io from "socket.io-client";
 import "./Message.css";
 import Chat from "./Chat.png"
 
+const socket=io("http://localhost:5000")
+
 function Message() {
+
+  const[message,setMessage]=useState("");
+  const onChangeMessage=(event)=>{
+    setMessage(event.target.value)
+  }
+
+  const joinRoom = () => {
+    console.log("clicked");
+    socket.emit("join-room",23);
+  }
+
+  const sendMessage=()=>{
+    console.log("clicked message");
+    socket.emit("send-message",{message:message , room:23});
+  }
+
+  useEffect(()=>{
+    socket.on("receive-message",(data)=>{
+      setMessage(data.message);
+    },[socket])
+  })
+
   return (
     <div className='message-component-module'>
       <Container className='message-component-container'>
@@ -19,13 +44,17 @@ function Message() {
         <div className='message-send'>
 
 
-          <div className='type-messages'>
+          <input className='type-messages' placeholder='Type Something' onChange={onChangeMessage}>
 
-          </div>
-          <Button variant="contained" className='send-btn' endIcon={<SendIcon />}>
+          </input>
+          <Button variant="contained" className='send-btn' endIcon={<SendIcon />} onClick={sendMessage}>
             Send
           </Button>
         </div>
+        <Button variant="contained" className='send-btn' endIcon={<SendIcon />} onClick={joinRoom}>
+            Send
+          </Button>
+          <div>Hello {message}</div>
       </Container>
     </div>
   )

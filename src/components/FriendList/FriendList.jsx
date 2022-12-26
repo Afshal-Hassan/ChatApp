@@ -12,10 +12,10 @@ function FriendList() {
     const { data } = await axios.get(FriendListAPI());
     setFriends(data.data);
   }, [friends]);
-
  
   useEffect(() => {
     fetchFriendsOfUser(() => {});
+  
   }, []);
 
   return (

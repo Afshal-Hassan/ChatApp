@@ -7,8 +7,9 @@ import "./App.css";
 function App() {
   return (
     <div className="App1">
-        <Message/>
       <FriendList/>
+        <Message/>
+      
     </div>
   );
 }

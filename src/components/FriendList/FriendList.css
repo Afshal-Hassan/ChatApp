@@ -1,9 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Montserrat&display=swap');
 
+
+
 .friend-list-container{
     
-    width: 300px !important;
+    width: 250px !important;
     height: 100vh;
     background-color: #0d2234;
     padding-top:24px !important ;

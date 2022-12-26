@@ -2,20 +2,15 @@ import React, { useCallback, useEffect, useState } from "react";
 import "./FriendList.css";
 import Chat from "./Chat.png";
 import { Container, Typography } from "@mui/material";
-import axios from "axios";
-import { FriendListAPI } from "../../api/APIUrl";
+import useFetchFriends from "../../hooks/useFetchFriends";
+
+
 
 function FriendList() {
-  const [friends, setFriends] = useState([]);
+  const [friends, fetchFriendsOfUser] = useFetchFriends();
 
-  const fetchFriendsOfUser = useCallback(async () => {
-    const { data } = await axios.get(FriendListAPI());
-    setFriends(data.data);
-  }, [friends]);
- 
   useEffect(() => {
-    fetchFriendsOfUser(() => {});
-  
+    fetchFriendsOfUser();
   }, []);
 
   return (

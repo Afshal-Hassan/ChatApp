@@ -4,12 +4,10 @@
 }
 .App1{
   background-color: #ececec;
-<<<<<<< HEAD
-=======
   display: flex;
   align-items: flex-start;
+  padding: 0;
   
->>>>>>> 26dbd46409a32ae29c96f513c461fb72239ce292
 }
 
 .App-logo {

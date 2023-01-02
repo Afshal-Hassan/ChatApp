@@ -61,7 +61,7 @@ function Message() {
         <Container className='message-send'>
 
 
-          <Input className='type-messages' placeholder='Type Something' onChange={onChangeMessage}>
+          <Input className='type-messages' placeholder='Type Something' onChange={onChangeMessage} disableUnderline={true} autoFocus= {true}>
 
           </Input>
           <Button variant="contained" className='send-btn' endIcon={<SendIcon />} onClick={sendMessage}>

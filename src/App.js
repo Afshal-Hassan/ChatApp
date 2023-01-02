@@ -7,8 +7,13 @@ import "./App.css";
 function App() {
   return (
     <div className="App1">
+<<<<<<< HEAD
       <FriendList/>
         <Message/>   
+=======
+        <Message/>
+      <FriendList/>
+>>>>>>> main
     </div>
   );
 }

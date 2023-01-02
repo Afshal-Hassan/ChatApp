@@ -2,15 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Montserrat&display=swap');
 
 .message-component-module{
+    width: 100% !important;
     height: 100vh !important;
 }
 .message-component-container{
     border: 2px solid red !important;
-    width: 700px !important;
+    width: 100% !important;
     height: 100vh !important;
     padding: 0 !important;
    
 }
+
 .friend-data-container{
     border: 1px solid black !important;
     height: 70px !important;
@@ -26,35 +28,84 @@
 }
 .messages-data{
     border: 2px solid green !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    padding-top: 40px !important;
+    padding-right: 8px !important;
+    padding-left: 8px !important;
     width: 100% !important;
     height: 81.5% !important;
+overflow-y: scroll;
     box-sizing: border-box !important;
 }
 .type-messages{
     border: 1px solid white !important;
-    width: 80% !important;
+    width: 90% !important;
     height:100% !important;
     box-sizing: border-box !important;
-    margin-left: 6.99px !important;
+    padding-left: 24px !important;
+    font-size: 15px !important;
+  margin: 0 !important;
    border-radius: 24px !important;
    background-color: white !important;
+     font-family: 'Fira Sans', sans-serif !important;
 
 }
-.messsages{
-    width: 250px;
-    height: 46px;
-    background-color:  white;
-    position: relative;
+.outgoing-messsages{
+
+    min-height: fit-content !important;
+    background-color:  white !important;
+    position: relative !important;
     border-radius: 15px !important;
-
+    padding-left: 51.5px !important;
+    padding-right: 51.5px !important;
+    padding-top: 13.5px !important;
+    padding-bottom: 13.5px !important;
+    margin-bottom: 34px !important;
+    font-family: 'Fira Sans', sans-serif !important;
+    text-align: center !important;
+    font-size: 15px !important;
 
 }
-.messsages::after{
+.incoming-messsages{
+
+    min-height: fit-content !important;
+    background-color:  #0d2234 !important;
+    color: whitesmoke !important;
+    position: relative !important;
+    border-radius: 15px !important;
+    padding-left: 51.5px !important;
+    padding-right: 51.5px !important;
+    padding-top: 13.5px !important;
+    padding-bottom: 13.5px !important;
+    align-self: flex-start !important;
+    font-family: 'Fira Sans', sans-serif !important;
+    text-align: center !important;
+    font-size: 15px !important;
+    margin-bottom: 34px !important;
+}
+.incoming-messsages::after{
     content: "" !important;
     position: absolute !important;
     width: 15px !important;
     height: 15px !important;
   
+    border-left: 0px !important;
+    border-top: 0px !important;
+    top: 100% !important;
+    left: 50% !important;
+    margin-left: -13px !important;
+    transform: rotate(45deg) !important;
+    margin-top: -7px !important;
+    background: #0d2234 !important;
+}
+.outgoing-messsages::after{
+    content: "" !important;
+    position: absolute !important;
+    width: 15px !important;
+    height: 15px !important;
+    
     border-left: 0px !important;
     border-top: 0px !important;
     top: 100% !important;
@@ -71,6 +122,7 @@
     box-sizing: border-box !important;
     display: flex !important;
     flex-direction: row !important;
+    padding: 0 !important;
    
 }
 .send-btn{

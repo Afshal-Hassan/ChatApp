@@ -8,8 +8,7 @@ function App() {
   return (
     <div className="App1">
       <FriendList/>
-        <Message/>
-      
+        <Message/>   
     </div>
   );
 }

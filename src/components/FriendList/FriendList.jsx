@@ -1,16 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./FriendList.css";
 import Chat from "./Chat.png";
 import { Container, Typography } from "@mui/material";
-import useFetchFriends from "../../hooks/useFetchFriends";
-
-
+import FetchFriends from "../../services/FetchFriends";
+import FetchPrivateRoomKey from "../../services/PrivateRoomKeyService";
 
 function FriendList() {
-  const [friends, fetchFriendsOfUser] = useFetchFriends();
-
+  const [friends, fetchFriendsOfUser] = FetchFriends();
+  const [fetchPrivateRoomKey] = FetchPrivateRoomKey();
+  const firstUserEmail = 'afshal@gmail.com';
+  
+ 
   useEffect(() => {
-    fetchFriendsOfUser();
+    fetchFriendsOfUser();    
   }, []);
 
   return (
@@ -23,7 +25,10 @@ function FriendList() {
         <div className="friend-list">
           {friends.map((friend) => {
             return (
-              <div className="friend-list-data" key={friend[0].user_id}>
+              <div className="friend-list-data" key={friend[0].user_id} onClick = {async() => {
+                fetchPrivateRoomKey(firstUserEmail,friend[0].email);       
+              }}>
+
                 <img className="friend-image" alt="FriendImage" src={Chat} />
                 <Typography className="friend-name">{friend[0].name}</Typography>
                 <div className="message-div-curve"></div>
@@ -35,6 +40,6 @@ function FriendList() {
       </Container>
     </div>
   );
-}
+};
 
 export default FriendList;

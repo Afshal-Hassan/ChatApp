@@ -1,11 +1,10 @@
-import React from "react";
 import { useState,useCallback } from "react";
 import { FriendListAPI } from "../api/APIUrl";
 import axios from "axios";
 
 
 
-const useFetchFriends = () => {
+const FetchFriends = () => {
 
     const [friends, setFriends] = useState([]);
     
@@ -16,6 +15,6 @@ const useFetchFriends = () => {
 
   return [friends,fetchFriendsOfUser];
 
-}
+};
 
-export default useFetchFriends;
+export default FetchFriends;

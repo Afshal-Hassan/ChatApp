@@ -1,5 +1,5 @@
 import { Container, Input, Modal, Typography } from '@mui/material';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import io from "socket.io-client";
 import "./Message.css";
@@ -18,19 +18,19 @@ const socket=io(`${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_PORT}
 
 function Message() {
   const [getMessages] = MessageService();
-    const dispatch =useDispatch();
     const currentMessage = useSelector((state) => state.changeTheLastAppendMessage);
-   
+   const scrollRef = useRef();
   const messageComponentHeading = useSelector((state) => state.changeTheMessageComponentHeaderReducer);
   const  privateRoomKey = useSelector((state) => state.changeThePrivateRoomKey);
   const senderAndReciverData = useSelector((state) => state.senderAndReceiverReducer);
   const[message,setMessage]=useState("");
   const[emojiPicker,setEmojiPicker] = useState(false);
   const [messagesData ,setMessagesData] = useState([]);
+  const[arrivalMessage,setArrivalMessage] = useState(null);
   const[emojiModelOpen,setEmojiModalOpen] = useState(false);
 
   const onChangeMessage = (event) => {
-    setMessage(event.target.value)
+    setMessage(event.target.value);
   }
 
   const modalEmojiOpener = () => {
@@ -54,6 +54,7 @@ function Message() {
       const messagesResponse = await getMessages(senderAndReciverData.sender,senderAndReciverData.receiver);
       console.log(messagesResponse);
       setMessagesData(messagesResponse);
+      
     }
   }
 
@@ -65,7 +66,7 @@ function Message() {
       let img = document.createElement("img");
       img.src=messages
       img.classList.add(messageType);
-      messages != "" ? messageArea.appendChild(img) : console.log(0);
+      messages != "" ? messageArea.appendChild(img) : messageArea.removeChild(img);
       messageArea.scrollTop = messageArea.scrollHeight;  
     }
     else{
@@ -74,7 +75,7 @@ function Message() {
     let className = messageType
     outgoingMessageDiv.classList.add(messageType);
     outgoingMessageDiv.innerHTML = messages;
-    messages != "" ? messageArea.appendChild(outgoingMessageDiv) : console.log(0);
+    messages != "" ? messageArea.appendChild(outgoingMessageDiv) : messageArea.removeChild(outgoingMessageDiv);
     messageArea.scrollTop = messageArea.scrollHeight;
     }
   }
@@ -93,25 +94,23 @@ function Message() {
 
   const sendMessage= ()=>{
     if(message.includes('http')){
-      dispatch(changeTheLastAppendMessage(message));
-      appendMessage(currentMessage.lastAppendMessage,"outgoing-images");
-      setMessage("");
+      setMessagesData([...messagesData,{email:senderAndReciverData.sender, messages:message}]);
       socket.emit("send-message",{message:message , room:privateRoomKey.roomId});
+    
     }else{
-      dispatch(changeTheLastAppendMessage(message));
-      appendMessage(currentMessage.lastAppendMessage,"outgoing-messsages");
-      setMessage("");
+      setMessagesData([...messagesData,{email:senderAndReciverData.sender, messages:message}]);
       socket.emit("send-message",{message:message , room:privateRoomKey.roomId ,messageSender:senderAndReciverData.sender, messageReceiver:senderAndReciverData.receiver});
     }
 
   }
+  console.log(messagesData);
 
   const receiveMessage = () => {
     socket.off("receive-message").on("receive-message",(data)=>{
       if(data.message.includes("http")){
         appendMessage(data.message,"incoming-images");
       }else{
-        appendMessage(data.message,"incoming-messsages");
+        setArrivalMessage({email:senderAndReciverData.receiver, messages:data.message});
       }
      
     },[socket]);
@@ -122,6 +121,15 @@ function Message() {
     receiveMessage();
   },[privateRoomKey]);
 
+  useEffect(()=>{
+    scrollRef.current?.scrollIntoView({behaviour:"smooth"});
+     document.getElementById('message-area').scrollTop = document.getElementById('message-area').scrollHeight;
+  },[messagesData])
+
+  useEffect(()=>{
+    arrivalMessage && setMessagesData([...messagesData,arrivalMessage])
+  },[arrivalMessage]);
+
   return (
     <div className='message-component-module'>
       <Container className='message-component-container'>
@@ -130,7 +138,7 @@ function Message() {
             <Typography className='friend-message-name'>{messageComponentHeading.messageHeading}</Typography>
         </div>
         <Container className='messages-data' id='message-area'>
-          {messagesData && messagesData.map((m) =>  m.email == senderAndReciverData.sender ? (<div className='outgoing-messsages' key={m.message_id}>{m.messages}</div>) : (<div className='incoming-messsages' key={m.message_id}>{m.messages}</div>)
+          {messagesData && messagesData.map((m,i) =>  m.email == senderAndReciverData.sender ? (<div className='outgoing-messsages' key={i}>{m.messages}</div>) : (<div className='incoming-messsages' key={i}>{m.messages}</div>)
           )}
         </Container>
         <Container className='message-send'>

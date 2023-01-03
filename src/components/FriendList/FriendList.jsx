@@ -8,18 +8,17 @@ import { useDispatch } from "react-redux";
 import { changeTheLastAppendMessage } from "../../redux/actions/LastAppendMessageAction"
 
 function FriendList() {
-  const dispatch =useDispatch();
   const [friends, fetchFriendsOfUser] = FetchFriends();
   const [fetchPrivateRoomKey] = FetchPrivateRoomKey();
   const [searchValue, setSearchValue] = useState("");
-  const firstUserEmail = 'afshal@gmail.com';
+  const firstUserEmail =localStorage.getItem("email");
   
   const onSearch = (event) => {
       setSearchValue(event.target.value);
   }
  
   useEffect(() => {
-    fetchFriendsOfUser();    
+    fetchFriendsOfUser(firstUserEmail);    
   }, []);
 
   return (
@@ -34,8 +33,7 @@ function FriendList() {
           {searchValue == "" ? friends.map((friend) => {
             return (
               <div className="friend-list-data" key={friend[0].user_id} onClick = {async() => {
-                fetchPrivateRoomKey(firstUserEmail,friend[0].email,friend[0].name);
-                dispatch(changeTheLastAppendMessage(""));        
+                fetchPrivateRoomKey(firstUserEmail,friend[0].email,friend[0].name);       
               }}>
 
                 <img className="friend-image" alt="FriendImage" src={Chat} />
@@ -51,8 +49,7 @@ function FriendList() {
         }).map((friend) => {
           return (
             <div className="friend-list-data" key={friend[0].user_id} onClick = {async() => {
-              fetchPrivateRoomKey(firstUserEmail,friend[0].email,friend[0].name);
-              dispatch(changeTheLastAppendMessage(""));       
+              fetchPrivateRoomKey(firstUserEmail,friend[0].email,friend[0].name);      
             }}>
 
               <img className="friend-image" alt="FriendImage" src={Chat} />

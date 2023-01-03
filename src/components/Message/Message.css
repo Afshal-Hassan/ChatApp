@@ -3,14 +3,16 @@
 
 .message-component-module{
     width: 100% !important;
-    height: 100vh !important;
+    height: 99vh !important;
     padding: 0 !important;
+
 }
 .message-component-container{
   margin: 0 !important;
     width: 100% !important;
-    height: 100vh !important;
+    height: 100% !important;
     padding: 0 !important;
+    
    
 }
 
@@ -38,7 +40,7 @@
     padding-left: 8px !important;
     width: 100% !important;
     height: 81.5% !important;
-overflow-y: scroll;
+overflow-y: auto !important;
     box-sizing: border-box !important;
 }
 .type-messages{
@@ -90,6 +92,36 @@ overflow-y: scroll;
     font-size: 15px !important;
     margin-bottom: 34px !important;
 }
+.outgoing-images{
+    max-width: 250px !important;
+    min-height: fit-content !important;
+    position: relative !important;
+    border-radius: 15px !important;
+    padding-left: 51.5px !important;
+    padding-right: 51.5px !important;
+    padding-top: 13.5px !important;
+    padding-bottom: 13.5px !important;
+    margin-bottom: 34px !important;
+    font-family: 'Fira Sans', sans-serif !important;
+    text-align: center !important;
+    font-size: 15px !important;
+}
+.incoming-images{
+    max-width: 250px !important;
+    min-height: fit-content !important;
+    color: whitesmoke !important;
+    position: relative !important;
+    border-radius: 15px !important;
+    padding-left: 51.5px !important;
+    padding-right: 51.5px !important;
+    padding-top: 13.5px !important;
+    padding-bottom: 13.5px !important;
+    align-self: flex-start !important;
+    font-family: 'Fira Sans', sans-serif !important;
+    text-align: center !important;
+    font-size: 15px !important;
+    margin-bottom: 34px !important;
+}
 .incoming-messsages::after{
     content: "" !important;
     position: absolute !important;
@@ -127,11 +159,19 @@ overflow-y: scroll;
     box-sizing: border-box !important;
     display: flex !important;
     flex-direction: row !important;
-    padding: 0 !important;
-   
+    align-items: center;
+    padding: 0 !important; 
 }
 .send-btn{
-    margin-left: 20px !important;
+    
+    color: #0d2234 !important;
+    cursor: pointer !important;
+    border-radius: 100% !important;
+    padding: 8px !important;
+ 
+}
+.send-btn:hover{
+    background-color: #F2F3F5;
 }
 .friend-pic{
     width: 37px !important;
@@ -145,3 +185,38 @@ overflow-y: scroll;
     margin-left: 15px !important;
     font-size: 18.5px !important;
 }
+.insert-emoji{
+    color: #0d2234 !important;
+
+    cursor: pointer !important;
+    border-radius: 100% !important;
+    padding: 8px !important;
+
+}
+.insert-emoji:hover{
+    background-color: #F2F3F5 !important;
+
+}
+.modal-box{
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; 
+    width:80% !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+#image-upload-icon{
+    color: #0d2234;
+    cursor: pointer;
+    margin-left: 10px !important;
+    cursor: pointer !important;
+    border-radius: 100% !important;
+    padding: 8px !important;
+}
+#image-upload-icon:hover{
+    background-color: #F2F3F5 !important;
+}
+input[type='file'] {
+    display: none;
+  }

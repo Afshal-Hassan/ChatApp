@@ -6,7 +6,7 @@
 .friend-list-container{
     
     width: 250px !important;
-    height: 100vh;
+    height: 99vh !important;
     background-color: #0d2234;
     border: 0.3px solid #0d2234 !important;
     padding-top:24px !important ;
@@ -89,7 +89,7 @@
     width: 100% !important;
     height: 95% !important;
     box-sizing: border-box !important;
-    padding-top: 60px !important;
+    padding-top: 33px !important;
     
 }
 .chat-logo{
@@ -119,4 +119,17 @@
     outline: 2px solid green !important;
     
     
+}
+.search-friends{
+    background-color: #0e2231 !important;
+    color: #FFFFFF !important;
+    padding-left: 15px !important;
+    padding-top: 3.5px !important;
+    padding-bottom: 3.5px !important;
+    border: 0.5px solid #0b1b27;
+    border-radius: 10px !important;
+    margin-top: 29.25px !important;
+    font-size: 14.5px !important;
+    font-family: Lato,Poppins,Muli,sans-serif !important;
+    margin-bottom: 33px !important;
 }

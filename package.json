@@ -45,8 +45,10 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.10.16",
     "@mui/styled-engine-sc": "^5.10.16",
+    "@zegocloud/zego-uikit-prebuilt": "^1.5.2",
     "react-redux": "^8.0.5",
     "react-router-dom": "^5.3.4",
+    "react-speech-recognition": "^3.10.0",
     "redux": "^4.2.0",
     "styled-components": "^5.3.6"
   }

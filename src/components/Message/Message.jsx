@@ -1,24 +1,38 @@
 import { Container, Input, Modal, Typography } from '@mui/material';
-import React, { useEffect, useReducer, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import io from "socket.io-client";
 import "./Message.css";
 import Chat from "./Chat.png"
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import EmojiPicker from 'emoji-picker-react';
 import { Box } from '@mui/system';
 import ImageIcon from '@mui/icons-material/Image';
 import MessageService from '../../services/MessagesService';
-import { changeTheLastAppendMessage } from "../../redux/actions/LastAppendMessageAction"
-
-
+import PersonalVideoIcon from '@mui/icons-material/PersonalVideo';
+import  { Link, useHistory,Redirect }  from "react-router-dom"
+import MicIcon from '@mui/icons-material/Mic';
+import SpeechRecognition,{ useSpeechRecognition } from 'react-speech-recognition';
+import { type } from '@testing-library/user-event/dist/type';
 
 const socket=io(`${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_PORT}`)
 
 function Message() {
+
+  const commands = [
+    {
+      command:["Go to *", "Open *"],
+      callback: (redirectPage) => setRedirectUrl(redirectPage),
+    },
+  ]
+
+  const[redirectUrl, setRedirectUrl] = useState("");
+  const navigate = useHistory();
+  const { transcript } = useSpeechRecognition({commands});
+
+
   const [getMessages] = MessageService();
-    const currentMessage = useSelector((state) => state.changeTheLastAppendMessage);
    const scrollRef = useRef();
   const messageComponentHeading = useSelector((state) => state.changeTheMessageComponentHeaderReducer);
   const  privateRoomKey = useSelector((state) => state.changeThePrivateRoomKey);
@@ -29,8 +43,39 @@ function Message() {
   const[arrivalMessage,setArrivalMessage] = useState(null);
   const[emojiModelOpen,setEmojiModalOpen] = useState(false);
 
+
+
+
+const pages = ["home","video"];
+
+const urls = {
+  home: "/" ,
+  video:"/video"
+}
+
+
+  if(redirectUrl){
+
+      let redirect= redirectUrl.slice(0,-1);
+      if(pages.includes(redirect)){
+      if(redirectUrl.localeCompare("video")){
+        navigate.push(`${urls[redirect]}`)
+      }else{
+       console.log("Page Not Found");
+      }
+      
+    } 
+  }
+  
+
   const onChangeMessage = (event) => {
     setMessage(event.target.value);
+  }
+  
+
+
+  const joinMeeting = () => {
+    navigate.push(`/video`);
   }
 
   const modalEmojiOpener = () => {
@@ -42,7 +87,7 @@ function Message() {
   }
   
   const onEmojiClick = (emojiObject,event) => {
-
+    console.log(emojiObject);
     setMessage(prevInput => prevInput + emojiObject.emoji);
     
     setEmojiPicker(false);
@@ -58,27 +103,29 @@ function Message() {
     }
   }
 
-  const appendMessage = (messages,messageType) => {
-    console.log(currentMessage);
-    if(messages.includes('http')){
-      console.log("image here")
-      let messageArea = document.getElementById('message-area');
-      let img = document.createElement("img");
-      img.src=messages
-      img.classList.add(messageType);
-      messages != "" ? messageArea.appendChild(img) : messageArea.removeChild(img);
-      messageArea.scrollTop = messageArea.scrollHeight;  
-    }
-    else{
-    let messageArea = document.getElementById('message-area');
-    let outgoingMessageDiv = document.createElement("div");
-    let className = messageType
-    outgoingMessageDiv.classList.add(messageType);
-    outgoingMessageDiv.innerHTML = messages;
-    messages != "" ? messageArea.appendChild(outgoingMessageDiv) : messageArea.removeChild(outgoingMessageDiv);
-    messageArea.scrollTop = messageArea.scrollHeight;
-    }
-  }
+
+
+  // const appendMessage = (messages,messageType) => {
+  //   console.log(currentMessage);
+  //   if(messages.includes('http')){
+  //     console.log("image here")
+  //     let messageArea = document.getElementById('message-area');
+  //     let img = document.createElement("img");
+  //     img.src=messages
+  //     img.classList.add(messageType);
+  //     messages != "" ? messageArea.appendChild(img) : messageArea.removeChild(img);
+  //     messageArea.scrollTop = messageArea.scrollHeight;  
+  //   }
+  //   else{
+  //   let messageArea = document.getElementById('message-area');
+  //   let outgoingMessageDiv = document.createElement("div");
+  //   let className = messageType
+  //   outgoingMessageDiv.classList.add(messageType);
+  //   outgoingMessageDiv.innerHTML = messages;
+  //   messages != "" ? messageArea.appendChild(outgoingMessageDiv) : messageArea.removeChild(outgoingMessageDiv);
+  //   messageArea.scrollTop = messageArea.scrollHeight;
+  //   }
+  // }
 
   const sendMessageByEnter = (event) => {
     if(event.key === "Enter"){
@@ -88,8 +135,14 @@ function Message() {
 
  const chooseFile = (event) => {
   const file = event.target.files[0];
-  const image = URL.createObjectURL(file);
-  setMessage(image);
+
+  var fileReader = new FileReader();
+  fileReader.readAsDataURL(file);
+  
+  fileReader.onload = () => {
+   console.log(fileReader.result);
+  }
+  
  }
 
   const sendMessage= ()=>{
@@ -103,12 +156,12 @@ function Message() {
     }
 
   }
-  console.log(messagesData);
+
 
   const receiveMessage = () => {
     socket.off("receive-message").on("receive-message",(data)=>{
       if(data.message.includes("http")){
-        appendMessage(data.message,"incoming-images");
+        setArrivalMessage({email:senderAndReciverData.receiver, messages:data.message});
       }else{
         setArrivalMessage({email:senderAndReciverData.receiver, messages:data.message});
       }
@@ -130,22 +183,24 @@ function Message() {
     arrivalMessage && setMessagesData([...messagesData,arrivalMessage])
   },[arrivalMessage]);
 
+ 
+
   return (
     <div className='message-component-module'>
       <Container className='message-component-container'>
         <div className='friend-data-container'>
             <img src={Chat} className="friend-pic" alt='friend-pic'/>
-            <Typography className='friend-message-name'>{messageComponentHeading.messageHeading}</Typography>
+            <Typography className='friend-message-name'>{messageComponentHeading.messageHeading.charAt(0).toUpperCase() + messageComponentHeading.messageHeading.slice(1)}</Typography>
         </div>
         <Container className='messages-data' id='message-area'>
-          {messagesData && messagesData.map((m,i) =>  m.email == senderAndReciverData.sender ? (<div className='outgoing-messsages' key={i}>{m.messages}</div>) : (<div className='incoming-messsages' key={i}>{m.messages}</div>)
+          {messagesData && messagesData.map((m,i) =>  m.email === senderAndReciverData.sender  ?  !m.messages.includes("jpeg") ? (<div className='outgoing-messsages' key={i}>{m.messages}</div>) :(<img src={m.messages} key={i} className="outgoing-images"/>) : !m.messages.includes('jpeg') ? (<div className='incoming-messsages' key={i}>{m.messages}</div>) :  (<img src={m.messages} key={i} className="incoming-images"/>)
           )}
         </Container>
         <Container className='message-send'>
         
-          <Input className='type-messages' value={message} placeholder='Type Something' onChange={onChangeMessage} disableUnderline={true} autoFocus= {true} onKeyUp={sendMessageByEnter}/>
+          <Input className='type-messages' value={message} placeholder='Type Something' onChange={onChangeMessage} disableUnderline={true} autoFocus= {true} onKeyUp={sendMessageByEnter} />
           <label htmlFor='image-upload'><ImageIcon id='image-upload-icon'/></label>
-          <input type='file' id='image-upload' onChange={chooseFile} accept="image/png, image/jpeg, .txt,.doc"/>
+          <input type='file' id='image-upload' onChange={chooseFile} accept="image/png, image/jpeg,.txt,.doc"/>
           <AddReactionIcon className='insert-emoji' onClick = {() => {
             setEmojiPicker(val => !val);
             modalEmojiOpener();   
@@ -160,6 +215,8 @@ function Message() {
             </Box>
             </div>
           </Modal>
+          <Link to="/video"><PersonalVideoIcon className="video-icon"/></Link>
+          <MicIcon onClick={SpeechRecognition.startListening}/>
           <SendIcon className='send-btn'  onClick={sendMessage}/> 
         </Container>
       </Container>

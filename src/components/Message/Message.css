@@ -46,7 +46,7 @@ overflow-y: auto !important;
 .type-messages{
     border: 1px solid white !important;
 
-    width: 90% !important;
+    width: 88% !important;
     height:100% !important;
     box-sizing: border-box !important;
     padding-left: 24px !important;
@@ -218,5 +218,27 @@ overflow-y: auto !important;
     background-color: #F2F3F5 !important;
 }
 input[type='file'] {
-    display: none;
-  }
+    display: none;  
+}
+
+#message-area::-webkit-scrollbar{
+width: 2px;
+}
+
+#message-area::-webkit-scrollbar-track{
+    background-color: #FFFFFF;
+}
+#message-area::-webkit-scrollbar-thumb{
+    background-color: #0d2234 !important;
+    border-radius: 10px !important;
+}
+.video-icon{
+    color: #0d2234 !important;
+
+    cursor: pointer !important;
+    border-radius: 100% !important;
+    padding: 8px !important;
+}
+.video-icon:hover{
+    background-color: #F2F3F5 !important;
+}

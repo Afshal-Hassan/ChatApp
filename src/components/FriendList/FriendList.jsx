@@ -4,8 +4,6 @@ import Chat from "./Chat.png";
 import { Container, Input, Typography } from "@mui/material";
 import FetchFriends from "../../services/FetchFriends";
 import FetchPrivateRoomKey from "../../services/PrivateRoomKeyService";
-import { useDispatch } from "react-redux";
-import { changeTheLastAppendMessage } from "../../redux/actions/LastAppendMessageAction"
 
 function FriendList() {
   const [friends, fetchFriendsOfUser] = FetchFriends();
@@ -30,6 +28,7 @@ function FriendList() {
         </div>
         <div className="friend-list">
         <Input disableUnderline={true} className="search-friends" placeholder="Search" onChange={onSearch}/>
+          <div className="friend-content">
           {searchValue == "" ? friends.map((friend) => {
             return (
               <div className="friend-list-data" key={friend[0].user_id} onClick = {async() => {
@@ -43,7 +42,7 @@ function FriendList() {
               </div>
             );
           }) : friends.filter((friend)=>{
-            if(friend[0].name.indexOf(searchValue) > -1){
+            if(friend[0].name.toLocaleUpperCase().indexOf(searchValue.toLocaleUpperCase()) > -1){
               return friend[0].name;
             }
         }).map((friend) => {
@@ -60,6 +59,9 @@ function FriendList() {
           );
         })}
         </div>
+       
+        </div>
+    
       </Container>
     </div>
   );

@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import io from "socket.io-client";
 import "./Message.css";
-import Chat from "./Chat.png"
 import {  useSelector } from 'react-redux';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import EmojiPicker from 'emoji-picker-react';
@@ -14,15 +13,18 @@ import PersonalVideoIcon from '@mui/icons-material/PersonalVideo';
 import  { Link, useHistory,Redirect }  from "react-router-dom"
 import MicIcon from '@mui/icons-material/Mic';
 import SpeechRecognition,{ useSpeechRecognition } from 'react-speech-recognition';
-import { type } from '@testing-library/user-event/dist/type';
+
+import MessageHeader from './MessageHeader';
 
 const socket=io(`${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_PORT}`)
 
-function Message() {
 
+
+function Message() {
+  let isReloaded= JSON.parse(localStorage.getItem("isReloaded"));
   const commands = [
     {
-      command:["Go to *", "Open *"],
+      command:["Go to *","Open for *","I want a *"],
       callback: (redirectPage) => setRedirectUrl(redirectPage),
     },
   ]
@@ -46,36 +48,30 @@ function Message() {
 
 
 
-const pages = ["home","video"];
+const pages = ["home","videocall"];
 
 const urls = {
   home: "/" ,
-  video:"/video"
+  videocall:"/video"
 }
 
 
   if(redirectUrl){
 
       let redirect= redirectUrl.slice(0,-1);
+      redirect =  redirect.replace(/\s/g, '');
       if(pages.includes(redirect)){
-      if(redirectUrl.localeCompare("video")){
         navigate.push(`${urls[redirect]}`)
       }else{
        console.log("Page Not Found");
       }
       
-    } 
+    
   }
   
 
   const onChangeMessage = (event) => {
     setMessage(event.target.value);
-  }
-  
-
-
-  const joinMeeting = () => {
-    navigate.push(`/video`);
   }
 
   const modalEmojiOpener = () => {
@@ -97,35 +93,10 @@ const urls = {
     if(privateRoomKey.roomId != 0){
       socket.emit("join-room",privateRoomKey.roomId);
       const messagesResponse = await getMessages(senderAndReciverData.sender,senderAndReciverData.receiver);
-      console.log(messagesResponse);
       setMessagesData(messagesResponse);
       
     }
   }
-
-
-
-  // const appendMessage = (messages,messageType) => {
-  //   console.log(currentMessage);
-  //   if(messages.includes('http')){
-  //     console.log("image here")
-  //     let messageArea = document.getElementById('message-area');
-  //     let img = document.createElement("img");
-  //     img.src=messages
-  //     img.classList.add(messageType);
-  //     messages != "" ? messageArea.appendChild(img) : messageArea.removeChild(img);
-  //     messageArea.scrollTop = messageArea.scrollHeight;  
-  //   }
-  //   else{
-  //   let messageArea = document.getElementById('message-area');
-  //   let outgoingMessageDiv = document.createElement("div");
-  //   let className = messageType
-  //   outgoingMessageDiv.classList.add(messageType);
-  //   outgoingMessageDiv.innerHTML = messages;
-  //   messages != "" ? messageArea.appendChild(outgoingMessageDiv) : messageArea.removeChild(outgoingMessageDiv);
-  //   messageArea.scrollTop = messageArea.scrollHeight;
-  //   }
-  // }
 
   const sendMessageByEnter = (event) => {
     if(event.key === "Enter"){
@@ -183,15 +154,18 @@ const urls = {
     arrivalMessage && setMessagesData([...messagesData,arrivalMessage])
   },[arrivalMessage]);
 
- 
+  useEffect(()=>{
+      if(isReloaded === false){
+        window.location.reload();
+        console.log("YES");
+        localStorage.setItem("isReloaded",JSON.stringify(true));
+      }
+  })
 
   return (
     <div className='message-component-module'>
       <Container className='message-component-container'>
-        <div className='friend-data-container'>
-            <img src={Chat} className="friend-pic" alt='friend-pic'/>
-            <Typography className='friend-message-name'>{messageComponentHeading.messageHeading.charAt(0).toUpperCase() + messageComponentHeading.messageHeading.slice(1)}</Typography>
-        </div>
+       <MessageHeader/>
         <Container className='messages-data' id='message-area'>
           {messagesData && messagesData.map((m,i) =>  m.email === senderAndReciverData.sender  ?  !m.messages.includes("jpeg") ? (<div className='outgoing-messsages' key={i}>{m.messages}</div>) :(<img src={m.messages} key={i} className="outgoing-images"/>) : !m.messages.includes('jpeg') ? (<div className='incoming-messsages' key={i}>{m.messages}</div>) :  (<img src={m.messages} key={i} className="incoming-images"/>)
           )}
@@ -216,7 +190,7 @@ const urls = {
             </div>
           </Modal>
           <Link to="/video"><PersonalVideoIcon className="video-icon"/></Link>
-          <MicIcon onClick={SpeechRecognition.startListening}/>
+          <MicIcon onClick={SpeechRecognition.startListening} className="voice-recog-icon"/>
           <SendIcon className='send-btn'  onClick={sendMessage}/> 
         </Container>
       </Container>

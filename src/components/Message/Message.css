@@ -242,3 +242,14 @@ width: 2px;
 .video-icon:hover{
     background-color: #F2F3F5 !important;
 }
+
+.voice-recog-icon{
+    color: #0d2234 !important;
+
+    cursor: pointer !important;
+    border-radius: 100% !important;
+    padding: 8px !important;
+}
+.voice-recog-icon:hover{
+    background-color: #F2F3F5 !important;
+}

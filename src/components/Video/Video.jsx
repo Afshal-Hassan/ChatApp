@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt'
 
 function Video() {
     
+
+    useEffect(()=>{
+        localStorage.setItem("isReloaded",JSON.stringify(false));
+    })
 
     const syncMeeting = async(element) => {
         const appID = 1166166214

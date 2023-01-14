@@ -48,7 +48,7 @@ function Message() {
 
 
 
-const pages = ["home","videocall"];
+const pages = ["home","videocall","facebook"];
 
 const urls = {
   home: "/" ,
@@ -93,6 +93,7 @@ const urls = {
     if(privateRoomKey.roomId != 0){
       socket.emit("join-room",privateRoomKey.roomId);
       const messagesResponse = await getMessages(senderAndReciverData.sender,senderAndReciverData.receiver);
+      console.log(messagesResponse);
       setMessagesData(messagesResponse);
       
     }

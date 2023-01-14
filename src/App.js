@@ -18,7 +18,8 @@ function App() {
         </Box>}><Route exact path="/" component={Message}><FriendList />
             <Message />
           </Route>
-          <Route exact path="/video" component={Video}><Video /></Route></Suspense>
+          <Route exact path="/video" component={Video}><Video/></Route>
+          </Suspense>
       </Switch>
     </div>
   );
